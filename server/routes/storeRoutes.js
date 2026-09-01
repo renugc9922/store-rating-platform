@@ -14,14 +14,11 @@ const {
 const authenticateToken = require("../middleware/authMiddleware");
 const authorizeRoles = require("../middleware/roleMiddleware");
 
-// ==================== GET ALL STORES ====================
 router.get(
   "/",
   authenticateToken,
   getAllStores
 );
-
-// ==================== GET LOGGED-IN OWNER'S STORE ====================
 
 router.get(
   "/my-store",
@@ -30,14 +27,12 @@ router.get(
   getOwnerStore
 );
 
-// ==================== GET STORE BY ID ====================
 router.get(
   "/:id",
   authenticateToken,
   getStoreById
 );
 
-// ==================== CREATE STORE ====================
 router.post(
   "/",
   authenticateToken,
@@ -45,16 +40,12 @@ router.post(
   createStore
 );
 
-// ==================== UPDATE STORE ====================
 router.put(
   "/:id",
   authenticateToken,
   authorizeRoles("ADMIN"),
   updateStore
 );
-
-// ==================== DELETE STORE ====================
-// Only ADMIN can delete a store
 
 router.delete(
   "/:id",

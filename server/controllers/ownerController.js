@@ -1,9 +1,7 @@
 const pool = require("../config/db");
 
-// ==================== GET OWNER'S STORE ====================
 const getOwnerStore = async (req, res) => {
   try {
-    // Logged-in user's ID from JWT
     const ownerId = req.user.id;
 
     const [stores] = await pool.query(
@@ -23,17 +21,13 @@ const getOwnerStore = async (req, res) => {
       message: "Owner store fetched successfully!",
       stores
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });
   }
 };
 
-// ==================== GET OWNER STORE RATINGS ====================
 const getOwnerStoreRatings = async (req, res) => {
   try {
     const ownerId = req.user.id;
@@ -87,10 +81,7 @@ const getOwnerStoreRatings = async (req, res) => {
       message: "Owner store ratings fetched successfully!",
       stores: storesWithRatings
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });
@@ -100,4 +91,4 @@ const getOwnerStoreRatings = async (req, res) => {
 module.exports = {
   getOwnerStore,
   getOwnerStoreRatings
-};  
+};

@@ -2,7 +2,6 @@ const pool = require("../config/db");
 const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 
-// ==================== CREATE USER ====================
 const createUser = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -51,28 +50,22 @@ const createUser = async (req, res) => {
       });
     }
 
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong while creating the user"
     });
   }
 };
 
-// ==================== GET ADMIN DASHBOARD STATS ====================
 const getDashboardStats = async (req, res) => {
   try {
-    // Total users
     const [usersResult] = await pool.query(
       "SELECT COUNT(*) AS total_users FROM users"
     );
 
-    // Total stores
     const [storesResult] = await pool.query(
       "SELECT COUNT(*) AS total_stores FROM stores"
     );
 
-    // Total ratings
     const [ratingsResult] = await pool.query(
       "SELECT COUNT(*) AS total_ratings FROM ratings"
     );
@@ -85,17 +78,13 @@ const getDashboardStats = async (req, res) => {
         total_ratings: ratingsResult[0].total_ratings
       }
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });
   }
 };
 
-// ==================== GET ALL USERS WITH SEARCH, FILTER & SORT ====================
 const getAllUsers = async (req, res) => {
   try {
     const {
@@ -115,31 +104,26 @@ const getAllUsers = async (req, res) => {
 
     const values = [];
 
-    // Search by name
     if (name) {
       query += " AND name LIKE ?";
       values.push(`%${name}%`);
     }
 
-    // Search by email
     if (email) {
       query += " AND email LIKE ?";
       values.push(`%${email}%`);
     }
 
-    // Search by address
     if (address) {
       query += " AND address LIKE ?";
       values.push(`%${address}%`);
     }
 
-    // Filter by role
     if (role) {
       query += " AND role = ?";
       values.push(role.toUpperCase());
     }
 
-    // Allowed fields for sorting
     const allowedSortFields = [
       "id",
       "name",
@@ -165,17 +149,13 @@ const getAllUsers = async (req, res) => {
       message: "Users fetched successfully!",
       users
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });
   }
 };
 
-// ==================== GET ALL STORES WITH SEARCH, FILTER & SORT ====================
 const getAllStoresWithRatings = async (req, res) => {
   try {
     const {
@@ -204,19 +184,16 @@ const getAllStoresWithRatings = async (req, res) => {
 
     const values = [];
 
-    // Search by store name
     if (name) {
       query += " AND stores.name LIKE ?";
       values.push(`%${name}%`);
     }
 
-    // Search by store email
     if (email) {
       query += " AND stores.email LIKE ?";
       values.push(`%${email}%`);
     }
 
-    // Search by store address
     if (address) {
       query += " AND stores.address LIKE ?";
       values.push(`%${address}%`);
@@ -257,22 +234,17 @@ const getAllStoresWithRatings = async (req, res) => {
       message: "Stores with ratings fetched successfully!",
       stores
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });
   }
 };
 
-// ==================== GET USER DETAILS BY ID ====================
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Get user details
     const [users] = await pool.query(
       `SELECT id, name, email, address, role, created_at
        FROM users
@@ -280,7 +252,6 @@ const getUserById = async (req, res) => {
       [id]
     );
 
-    // Check if user exists
     if (users.length === 0) {
       return res.status(404).json({
         message: "User not found"
@@ -289,7 +260,6 @@ const getUserById = async (req, res) => {
 
     const user = users[0];
 
-    // If user is a Store Owner, get their store rating
     if (user.role === "OWNER") {
       const [stores] = await pool.query(
         `SELECT
@@ -311,10 +281,7 @@ const getUserById = async (req, res) => {
       message: "User details fetched successfully!",
       user
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });

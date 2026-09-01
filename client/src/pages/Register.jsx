@@ -5,7 +5,6 @@ import api from "../services/api";
 function Register() {
   const navigate = useNavigate();
 
-  // Store the values entered by the user
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -16,7 +15,6 @@ function Register() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Update form values when the user types
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -26,7 +24,6 @@ function Register() {
     });
   };
 
-  // Send registration data to the backend
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -38,7 +35,6 @@ function Register() {
 
       setMessage(response.data.message);
 
-      // Move the user to the login page after successful registration
       setTimeout(() => {
         navigate("/login");
       }, 1500);

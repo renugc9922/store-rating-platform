@@ -10,10 +10,6 @@ const {
 const authenticateToken = require("../middleware/authMiddleware");
 const authorizeRoles = require("../middleware/roleMiddleware");
 
-
-// ==================== GET ALL USERS ====================
-// Only ADMIN can view users
-
 router.get(
   "/",
   authenticateToken,
@@ -21,16 +17,11 @@ router.get(
   getAllUsers
 );
 
-
-// ==================== GET USER BY ID ====================
-// Only ADMIN can view user details
-
 router.get(
   "/:id",
   authenticateToken,
   authorizeRoles("ADMIN"),
   getUserById
 );
-
 
 module.exports = router;

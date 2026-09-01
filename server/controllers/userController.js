@@ -1,6 +1,5 @@
 const pool = require("../config/db");
 
-// ==================== GET ALL USERS + FILTERS + SORTING ====================
 const getAllUsers = async (req, res) => {
   try {
     const { name, email, address, role, sortBy, order } = req.query;
@@ -12,8 +11,6 @@ const getAllUsers = async (req, res) => {
     `;
 
     const values = [];
-
-    // ==================== FILTERS ====================
 
     if (name) {
       query += " AND name LIKE ?";
@@ -34,8 +31,6 @@ const getAllUsers = async (req, res) => {
       query += " AND role = ?";
       values.push(role);
     }
-
-    // ==================== SORTING ====================
 
     const allowedSortFields = [
       "id",
@@ -63,23 +58,17 @@ const getAllUsers = async (req, res) => {
       message: "Users fetched successfully!",
       users
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });
   }
 };
 
-
-// ==================== GET USER BY ID ====================
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Get user details
     const [users] = await pool.query(
       `SELECT id, name, address, email, role, created_at
        FROM users
@@ -94,11 +83,6 @@ const getUserById = async (req, res) => {
     }
 
     const user = users[0];
-
-    // ====================
-    // IF USER IS STORE OWNER
-    // GET THEIR STORE + AVERAGE RATING
-    // ====================
 
     if (user.role === "OWNER") {
       const [stores] = await pool.query(
@@ -137,16 +121,12 @@ const getUserById = async (req, res) => {
       message: "User fetched successfully!",
       user
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });
   }
 };
-
 
 module.exports = {
   getAllUsers,

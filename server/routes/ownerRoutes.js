@@ -10,8 +10,6 @@ const {
 const authenticateToken = require("../middleware/authMiddleware");
 const authorizeRoles = require("../middleware/roleMiddleware");
 
-
-// ==================== GET OWNER'S STORE ====================
 router.get(
   "/store",
   authenticateToken,
@@ -19,14 +17,11 @@ router.get(
   getOwnerStore
 );
 
-
-// ==================== GET OWNER STORE RATINGS ====================
 router.get(
   "/ratings",
   authenticateToken,
   authorizeRoles("OWNER"),
   getOwnerStoreRatings
 );
-
 
 module.exports = router;

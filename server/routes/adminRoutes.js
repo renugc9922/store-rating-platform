@@ -14,8 +14,6 @@ const {
 const authenticateToken = require("../middleware/authMiddleware");
 const authorizeRoles = require("../middleware/roleMiddleware");
 
-
-// ==================== GET ADMIN DASHBOARD STATISTICS ====================
 router.get(
   "/dashboard",
   authenticateToken,
@@ -23,7 +21,6 @@ router.get(
   getDashboardStats
 );
 
-// ==================== CREATE USER ====================
 router.post(
   "/users",
   authenticateToken,
@@ -56,8 +53,6 @@ router.post(
   createUser
 );
 
-
-// ==================== GET ALL USERS ====================
 router.get(
   "/users",
   authenticateToken,
@@ -65,7 +60,6 @@ router.get(
   getAllUsers
 );
 
-// ==================== GET USER DETAILS BY ID ====================
 router.get(
   "/users/:id",
   authenticateToken,
@@ -73,13 +67,11 @@ router.get(
   getUserById
 );
 
-// ==================== GET ALL STORES WITH AVERAGE RATINGS ====================
 router.get(
   "/stores",
   authenticateToken,
   authorizeRoles("ADMIN"),
   getAllStoresWithRatings
 );
-
 
 module.exports = router;

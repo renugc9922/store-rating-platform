@@ -1,28 +1,22 @@
 const pool = require("../config/db");
 
-// ==================== CREATE RATING ====================
 const createRating = async (req, res) => {
   try {
     const { store_id, rating } = req.body;
-
-    // Logged-in user's ID comes from JWT
     const user_id = req.user.id;
 
-    // Check required fields
     if (!store_id || !rating) {
       return res.status(400).json({
         message: "Store ID and rating are required"
       });
     }
 
-    // Validate rating range
     if (rating < 1 || rating > 5) {
       return res.status(400).json({
         message: "Rating must be between 1 and 5"
       });
     }
 
-    // Check if store exists
     const [stores] = await pool.query(
       "SELECT id FROM stores WHERE id = ?",
       [store_id]
@@ -34,7 +28,6 @@ const createRating = async (req, res) => {
       });
     }
 
-    // Check if user has already rated this store
     const [existingRatings] = await pool.query(
       "SELECT id FROM ratings WHERE user_id = ? AND store_id = ?",
       [user_id, store_id]
@@ -46,7 +39,6 @@ const createRating = async (req, res) => {
       });
     }
 
-    // Create rating
     const [result] = await pool.query(
       `INSERT INTO ratings (user_id, store_id, rating)
        VALUES (?, ?, ?)`,
@@ -62,22 +54,17 @@ const createRating = async (req, res) => {
         rating
       }
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });
   }
 };
 
-// ==================== GET RATINGS BY STORE ====================
 const getRatingsByStore = async (req, res) => {
   try {
     const { store_id } = req.params;
 
-    // Check if store exists
     const [stores] = await pool.query(
       "SELECT id, name FROM stores WHERE id = ?",
       [store_id]
@@ -89,7 +76,6 @@ const getRatingsByStore = async (req, res) => {
       });
     }
 
-    // Get all ratings for the store
     const [ratings] = await pool.query(
       `SELECT 
         ratings.id,
@@ -109,26 +95,19 @@ const getRatingsByStore = async (req, res) => {
       store: stores[0],
       ratings
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });
   }
 };
 
-// ==================== UPDATE RATING ====================
 const updateRating = async (req, res) => {
   try {
     const { id } = req.params;
     const { rating } = req.body;
-
-    // Logged-in user's ID from JWT
     const user_id = req.user.id;
 
-    // Validate rating
     if (!rating) {
       return res.status(400).json({
         message: "Rating is required"
@@ -141,7 +120,6 @@ const updateRating = async (req, res) => {
       });
     }
 
-    // Check if rating exists
     const [ratings] = await pool.query(
       "SELECT * FROM ratings WHERE id = ?",
       [id]
@@ -155,14 +133,12 @@ const updateRating = async (req, res) => {
 
     const existingRating = ratings[0];
 
-    // Check ownership
     if (existingRating.user_id !== user_id) {
       return res.status(403).json({
         message: "You can only update your own rating"
       });
     }
 
-    // Update rating
     await pool.query(
       `UPDATE ratings
        SET rating = ?, updated_at = CURRENT_TIMESTAMP
@@ -179,25 +155,18 @@ const updateRating = async (req, res) => {
         rating
       }
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });
   }
 };
 
-// ==================== DELETE RATING ====================
 const deleteRating = async (req, res) => {
   try {
     const { id } = req.params;
-
-    // Logged-in user's ID from JWT
     const user_id = req.user.id;
 
-    // Check if rating exists
     const [ratings] = await pool.query(
       "SELECT * FROM ratings WHERE id = ?",
       [id]
@@ -211,14 +180,12 @@ const deleteRating = async (req, res) => {
 
     const existingRating = ratings[0];
 
-    // Check ownership
     if (existingRating.user_id !== user_id) {
       return res.status(403).json({
         message: "You can only delete your own rating"
       });
     }
 
-    // Delete rating
     await pool.query(
       "DELETE FROM ratings WHERE id = ?",
       [id]
@@ -227,10 +194,7 @@ const deleteRating = async (req, res) => {
     return res.status(200).json({
       message: "Rating deleted successfully!"
     });
-
   } catch (error) {
-    console.error(error);
-
     return res.status(500).json({
       message: "Something went wrong"
     });

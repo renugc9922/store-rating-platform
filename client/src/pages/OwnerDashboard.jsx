@@ -36,8 +36,6 @@ function OwnerDashboard() {
         }
       })
       .catch((error) => {
-        console.error("Error fetching owner dashboard:", error);
-
         if (isCurrent) {
           setMessage(
             error.response?.data?.message ||

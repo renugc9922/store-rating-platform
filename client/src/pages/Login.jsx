@@ -13,7 +13,6 @@ function Login() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Update form values
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -23,7 +22,6 @@ function Login() {
     }));
   };
 
-  // Handle login
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -31,22 +29,15 @@ function Login() {
     setMessage("");
 
     try {
-      // Send login request to backend
       const response = await api.post("/auth/login", formData);
 
-      // Get token and user information
       const { token, user, message: successMessage } = response.data;
 
-      // Save token
       localStorage.setItem("token", token);
-
-      // Save logged-in user
       localStorage.setItem("user", JSON.stringify(user));
 
-      // Show success message
       setMessage(successMessage);
 
-      // Redirect based on user role
       setTimeout(() => {
         if (user.role === "ADMIN") {
           navigate("/admin-dashboard");
@@ -56,7 +47,6 @@ function Login() {
           navigate("/user-dashboard");
         }
       }, 1000);
-
     } catch (error) {
       setMessage(
         error.response?.data?.message ||
@@ -70,8 +60,6 @@ function Login() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50 px-6">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-sm">
-
-        {/* Heading */}
         <h1 className="text-center text-3xl font-bold text-gray-900">
           Welcome Back
         </h1>
@@ -80,13 +68,7 @@ function Login() {
           Login to access your account.
         </p>
 
-        {/* Login Form */}
-        <form
-          onSubmit={handleSubmit}
-          className="mt-8 space-y-5"
-        >
-
-          {/* Email */}
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700">
               Email
@@ -103,7 +85,6 @@ function Login() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700">
               Password
@@ -120,14 +101,12 @@ function Login() {
             />
           </div>
 
-          {/* Message */}
           {message && (
             <p className="text-sm text-gray-600">
               {message}
             </p>
           )}
 
-          {/* Login Button */}
           <button
             type="submit"
             disabled={loading}
@@ -135,10 +114,8 @@ function Login() {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
-
         </form>
 
-        {/* Register Link */}
         <p className="mt-6 text-center text-sm text-gray-600">
           Don't have an account?{" "}
 
@@ -149,7 +126,6 @@ function Login() {
             Register
           </Link>
         </p>
-
       </div>
     </main>
   );

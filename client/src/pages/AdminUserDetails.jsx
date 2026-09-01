@@ -20,8 +20,6 @@ function AdminUserDetails() {
         }
       })
       .catch((error) => {
-        console.error("Error fetching user details:", error);
-
         if (isCurrent) {
           setMessage(
             error.response?.data?.message ||
@@ -43,8 +41,6 @@ function AdminUserDetails() {
   return (
     <main className="min-h-screen bg-gray-50 px-6 py-10">
       <div className="mx-auto max-w-4xl">
-
-        {/* Back button */}
         <button
           onClick={() => navigate("/admin/users")}
           className="mb-6 text-sm font-medium text-blue-600 hover:text-blue-700"
@@ -52,7 +48,6 @@ function AdminUserDetails() {
           ← Back to Users
         </button>
 
-        {/* Page heading */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
             User Details
@@ -63,25 +58,21 @@ function AdminUserDetails() {
           </p>
         </div>
 
-        {/* Loading */}
         {loading && (
           <p className="text-gray-600">
             Loading user details...
           </p>
         )}
 
-        {/* Error */}
         {message && (
           <div className="rounded-lg bg-red-50 p-4 text-red-600">
             {message}
           </div>
         )}
 
-        {/* User details */}
         {!loading && user && (
           <>
             <div className="rounded-lg bg-white p-6 shadow-sm">
-
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">
@@ -99,7 +90,6 @@ function AdminUserDetails() {
               </div>
 
               <div className="mt-8 grid gap-6 md:grid-cols-2">
-
                 <div>
                   <p className="text-sm font-medium text-gray-500">
                     Email
@@ -139,22 +129,17 @@ function AdminUserDetails() {
                     {user.id}
                   </p>
                 </div>
-
               </div>
-
             </div>
 
-            {/* Owner store details */}
             {user.role === "OWNER" && (
               <div className="mt-8">
-
                 <h2 className="text-xl font-semibold text-gray-800">
                   Store Details
                 </h2>
 
                 {user.stores && user.stores.length > 0 ? (
                   <div className="mt-4 space-y-4">
-
                     {user.stores.map((store) => (
                       <div
                         key={store.id}
@@ -170,10 +155,8 @@ function AdminUserDetails() {
                             ? `${Number(store.average_rating).toFixed(2)}/5`
                             : "No ratings yet"}
                         </p>
-
                       </div>
                     ))}
-
                   </div>
                 ) : (
                   <div className="mt-4 rounded-lg bg-white p-5 shadow-sm">
@@ -182,12 +165,10 @@ function AdminUserDetails() {
                     </p>
                   </div>
                 )}
-
               </div>
             )}
           </>
         )}
-
       </div>
     </main>
   );

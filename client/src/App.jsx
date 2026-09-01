@@ -3,17 +3,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-// Public Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-// Dashboard Pages
 import UserDashboard from "./pages/UserDashboard";
 import OwnerDashboard from "./pages/OwnerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 
-// Admin Pages
 import AdminUsers from "./pages/AdminUsers";
 import AdminUserDetails from "./pages/AdminUserDetails";
 import AdminStores from "./pages/AdminStores";
@@ -24,26 +21,11 @@ function App() {
       <Navbar />
 
       <Routes>
+        <Route path="/" element={<Home />} />
 
-        {/* ==================== PUBLIC ROUTES ==================== */}
+        <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/register"
-          element={<Register />}
-        />
-
-
-        {/* ==================== DASHBOARD ROUTES ==================== */}
+        <Route path="/register" element={<Register />} />
 
         <Route
           path="/user-dashboard"
@@ -72,9 +54,6 @@ function App() {
           }
         />
 
-
-        {/* ==================== ADMIN USER ROUTES ==================== */}
-
         <Route
           path="/admin/users"
           element={
@@ -84,7 +63,6 @@ function App() {
           }
         />
 
-        {/* User Details Page */}
         <Route
           path="/admin/users/:id"
           element={
@@ -93,9 +71,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-
-        {/* ==================== ADMIN STORE ROUTES ==================== */}
 
         <Route
           path="/admin/stores"
@@ -106,14 +81,7 @@ function App() {
           }
         />
 
-
-        {/* ==================== FALLBACK ROUTE ==================== */}
-
-        <Route
-          path="*"
-          element={<Home />}
-        />
-
+        <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );

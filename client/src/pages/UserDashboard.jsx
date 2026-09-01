@@ -8,17 +8,10 @@ function UserDashboard() {
   const [searchAddress, setSearchAddress] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
-
-  // Store currently being rated
   const [selectedStore, setSelectedStore] = useState(null);
-
-  // Selected rating value
   const [selectedRating, setSelectedRating] = useState(0);
-
-  // Rating submission loading state
   const [ratingLoading, setRatingLoading] = useState(false);
 
-  // ==================== FETCH STORES ====================
   const fetchStores = async (filters = {}) => {
     try {
       setLoading(true);
@@ -37,8 +30,6 @@ function UserDashboard() {
       const response = await api.get("/stores", { params });
       setStores(response.data.stores || []);
     } catch (error) {
-      console.error("Error fetching stores:", error);
-
       setMessage(
         error.response?.data?.message ||
         "Unable to fetch stores. Please try again."
@@ -48,7 +39,6 @@ function UserDashboard() {
     }
   };
 
-  // Fetch stores when page loads
   useEffect(() => {
     let isCurrent = true;
 
@@ -59,8 +49,6 @@ function UserDashboard() {
         }
       })
       .catch((error) => {
-        console.error("Error fetching stores:", error);
-
         if (isCurrent) {
           setMessage(
             error.response?.data?.message ||
@@ -79,7 +67,6 @@ function UserDashboard() {
     };
   }, []);
 
-  // ==================== SEARCH ====================
   const handleSearch = () => {
     fetchStores({
       name: searchName.trim(),
@@ -87,21 +74,18 @@ function UserDashboard() {
     });
   };
 
-  // ==================== RESET SEARCH ====================
   const handleReset = () => {
     setSearchName("");
     setSearchAddress("");
     fetchStores();
   };
 
-  // ==================== OPEN RATING SECTION ====================
   const handleRateStore = (store) => {
     setSelectedStore(store);
     setSelectedRating(store.user_rating ? Number(store.user_rating) : 0);
     setMessage("");
   };
 
-  // ==================== SUBMIT / UPDATE RATING ====================
   const handleSubmitRating = async () => {
     if (!selectedStore) return;
 
@@ -136,8 +120,6 @@ function UserDashboard() {
         address: searchAddress.trim()
       });
     } catch (error) {
-      console.error("Rating error:", error);
-
       setMessage(
         error.response?.data?.message ||
         "Unable to submit rating. Please try again."
@@ -147,7 +129,6 @@ function UserDashboard() {
     }
   };
 
-  // ==================== CLOSE RATING SECTION ====================
   const handleCancelRating = () => {
     setSelectedStore(null);
     setSelectedRating(0);

@@ -18,17 +18,13 @@ function AdminUsers() {
     role: "USER"
   });
 
-  // Filter states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [role, setRole] = useState("");
 
-  // Sorting states
   const [sortBy, setSortBy] = useState("id");
   const [order, setOrder] = useState("asc");
-
-  // ==================== FETCH USERS ====================
 
   const fetchUsers = async (customParams = {}) => {
     try {
@@ -63,8 +59,6 @@ function AdminUsers() {
 
       setUsers(response.data.users || []);
     } catch (error) {
-      console.error("Error fetching users:", error);
-
       setMessage(
         error.response?.data?.message ||
           "Unable to fetch users."
@@ -73,8 +67,6 @@ function AdminUsers() {
       setLoading(false);
     }
   };
-
-  // ==================== LOAD USERS ====================
 
   useEffect(() => {
     let isCurrent = true;
@@ -91,8 +83,6 @@ function AdminUsers() {
         }
       })
       .catch((error) => {
-        console.error("Error fetching users:", error);
-
         if (isCurrent) {
           setMessage(
             error.response?.data?.message ||
@@ -111,20 +101,15 @@ function AdminUsers() {
     };
   }, []);
 
-  // ==================== SEARCH USERS ====================
-
   const handleSearch = () => {
     fetchUsers();
   };
-
-  // ==================== RESET FILTERS ====================
 
   const handleReset = async () => {
     try {
       setLoading(true);
       setMessage("");
 
-      // Reset frontend state
       setName("");
       setEmail("");
       setAddress("");
@@ -132,7 +117,6 @@ function AdminUsers() {
       setSortBy("id");
       setOrder("asc");
 
-      // Fetch default user list directly
       const response = await api.get("/admin/users", {
         params: {
           sortBy: "id",
@@ -142,8 +126,6 @@ function AdminUsers() {
 
       setUsers(response.data.users || []);
     } catch (error) {
-      console.error("Error resetting users:", error);
-
       setMessage(
         error.response?.data?.message ||
           "Unable to reset users."
@@ -182,8 +164,6 @@ function AdminUsers() {
   return (
     <main className="min-h-screen bg-gray-50 px-6 py-10">
       <div className="mx-auto max-w-6xl">
-
-        {/* PAGE HEADING */}
         <div className="mb-8">
           <button
             onClick={() => navigate("/admin-dashboard")}
@@ -201,7 +181,6 @@ function AdminUsers() {
           </p>
         </div>
 
-        {/* CREATE USER */}
         <div className="mb-8 rounded-lg bg-white p-6 shadow-sm">
           <h2 className="mb-5 text-xl font-semibold text-gray-800">
             Create User
@@ -269,16 +248,12 @@ function AdminUsers() {
           </form>
         </div>
 
-        {/* SEARCH AND FILTER SECTION */}
         <div className="mb-8 rounded-lg bg-white p-6 shadow-sm">
-
           <h2 className="mb-5 text-xl font-semibold text-gray-800">
             Search & Filter Users
           </h2>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-
-            {/* NAME */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 Name
@@ -293,7 +268,6 @@ function AdminUsers() {
               />
             </div>
 
-            {/* EMAIL */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 Email
@@ -308,7 +282,6 @@ function AdminUsers() {
               />
             </div>
 
-            {/* ADDRESS */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 Address
@@ -323,7 +296,6 @@ function AdminUsers() {
               />
             </div>
 
-            {/* ROLE */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 Role
@@ -340,13 +312,9 @@ function AdminUsers() {
                 <option value="ADMIN">Admin</option>
               </select>
             </div>
-
           </div>
 
-          {/* SORTING */}
           <div className="mt-5 grid gap-4 md:grid-cols-2">
-
-            {/* SORT BY */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 Sort By
@@ -366,7 +334,6 @@ function AdminUsers() {
               </select>
             </div>
 
-            {/* ORDER */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 Order
@@ -381,12 +348,9 @@ function AdminUsers() {
                 <option value="desc">Descending</option>
               </select>
             </div>
-
           </div>
 
-          {/* ACTION BUTTONS */}
           <div className="mt-6 flex flex-wrap gap-3">
-
             <button
               onClick={handleSearch}
               disabled={loading}
@@ -402,34 +366,26 @@ function AdminUsers() {
             >
               Reset
             </button>
-
           </div>
-
         </div>
 
-        {/* ERROR MESSAGE */}
         {message && (
           <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-600">
             {message}
           </div>
         )}
 
-        {/* LOADING */}
         {loading && (
           <p className="text-gray-600">
             Loading users...
           </p>
         )}
 
-        {/* USERS TABLE */}
         {!loading && users.length > 0 && (
           <div className="overflow-x-auto rounded-lg bg-white shadow-sm">
-
             <table className="w-full">
-
               <thead className="border-b bg-gray-50">
                 <tr>
-
                   <th className="px-5 py-4 text-left text-sm font-semibold text-gray-700">
                     Name
                   </th>
@@ -449,18 +405,15 @@ function AdminUsers() {
                   <th className="px-5 py-4 text-left text-sm font-semibold text-gray-700">
                     Action
                   </th>
-
                 </tr>
               </thead>
 
               <tbody>
-
                 {users.map((user) => (
                   <tr
                     key={user.id}
                     className="border-b last:border-none hover:bg-gray-50"
                   >
-
                     <td className="px-5 py-4 text-gray-800">
                       {user.name}
                     </td>
@@ -480,39 +433,27 @@ function AdminUsers() {
                     </td>
 
                     <td className="px-5 py-4">
-
                       <button
-                        onClick={() =>
-                          navigate(`/admin/users/${user.id}`)
-                        }
+                        onClick={() => navigate(`/admin/users/${user.id}`)}
                         className="rounded-md border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 transition hover:bg-blue-50"
                       >
                         View Details
                       </button>
-
                     </td>
-
                   </tr>
                 ))}
-
               </tbody>
-
             </table>
-
           </div>
         )}
 
-        {/* NO USERS */}
         {!loading && users.length === 0 && !message && (
           <div className="rounded-lg bg-white p-6 shadow-sm">
-
             <p className="text-gray-600">
               No users found matching your search.
             </p>
-
           </div>
         )}
-
       </div>
     </main>
   );

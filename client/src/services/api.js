@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Central Axios configuration for backend API requests
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
   headers: {
@@ -8,7 +7,6 @@ const api = axios.create({
   }
 });
 
-// Automatically attach JWT token to every protected request
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");

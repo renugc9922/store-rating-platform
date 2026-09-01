@@ -15,12 +15,10 @@ function Navbar() {
 
   return (
     <nav className="flex items-center justify-between border-b border-gray-200 bg-white px-8 py-4">
-      {/* Website logo / name */}
       <Link to="/" className="text-xl font-bold text-gray-800">
         Store Rating Platform
       </Link>
 
-      {/* Navigation links */}
       <div className="flex items-center gap-6">
         <Link
           to="/"

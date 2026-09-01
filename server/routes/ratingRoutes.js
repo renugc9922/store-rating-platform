@@ -12,10 +12,6 @@ const {
 const authenticateToken = require("../middleware/authMiddleware");
 const authorizeRoles = require("../middleware/roleMiddleware");
 
-
-// ==================== CREATE RATING ====================
-// Only USER can rate a store
-
 router.post(
   "/",
   authenticateToken,
@@ -23,18 +19,11 @@ router.post(
   createRating
 );
 
-
-// ==================== GET RATINGS BY STORE ====================
-
 router.get(
   "/store/:store_id",
   authenticateToken,
   getRatingsByStore
 );
-
-
-// ==================== UPDATE RATING ====================
-// USER can update only their own rating
 
 router.put(
   "/:id",
@@ -43,16 +32,11 @@ router.put(
   updateRating
 );
 
-
-// ==================== DELETE RATING ====================
-// USER can delete only their own rating
-
 router.delete(
   "/:id",
   authenticateToken,
   authorizeRoles("USER"),
   deleteRating
 );
-
 
 module.exports = router;

@@ -14,7 +14,6 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
 
-  // Fetch statistics when page loads
   useEffect(() => {
     let isCurrent = true;
 
@@ -25,8 +24,6 @@ function AdminDashboard() {
         }
       })
       .catch((error) => {
-        console.error("Error fetching dashboard statistics:", error);
-
         if (isCurrent) {
           setMessage(
             error.response?.data?.message ||
@@ -48,8 +45,6 @@ function AdminDashboard() {
   return (
     <main className="min-h-screen bg-gray-50 px-6 py-10">
       <div className="mx-auto max-w-6xl">
-
-        {/* Dashboard heading */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
             Admin Dashboard
@@ -60,17 +55,13 @@ function AdminDashboard() {
           </p>
         </div>
 
-        {/* Error message */}
         {message && (
           <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-600">
             {message}
           </div>
         )}
 
-        {/* Statistics cards */}
         <div className="grid gap-5 md:grid-cols-3">
-
-          {/* Total Users */}
           <div className="rounded-lg bg-white p-6 shadow-sm">
             <p className="text-sm text-gray-500">
               Total Users
@@ -81,7 +72,6 @@ function AdminDashboard() {
             </h2>
           </div>
 
-          {/* Total Stores */}
           <div className="rounded-lg bg-white p-6 shadow-sm">
             <p className="text-sm text-gray-500">
               Total Stores
@@ -92,7 +82,6 @@ function AdminDashboard() {
             </h2>
           </div>
 
-          {/* Total Ratings */}
           <div className="rounded-lg bg-white p-6 shadow-sm">
             <p className="text-sm text-gray-500">
               Total Ratings
@@ -102,13 +91,9 @@ function AdminDashboard() {
               {loading ? "--" : statistics.total_ratings}
             </h2>
           </div>
-
         </div>
 
-        {/* Management sections */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
-
-          {/* User Management */}
           <div className="rounded-lg bg-white p-6 shadow-sm">
             <h2 className="text-xl font-semibold text-gray-800">
               User Management
@@ -126,7 +111,6 @@ function AdminDashboard() {
             </button>
           </div>
 
-          {/* Store Management */}
           <div className="rounded-lg bg-white p-6 shadow-sm">
             <h2 className="text-xl font-semibold text-gray-800">
               Store Management
@@ -143,9 +127,7 @@ function AdminDashboard() {
               View Stores
             </button>
           </div>
-
         </div>
-
       </div>
     </main>
   );
