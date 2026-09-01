@@ -1,6 +1,6 @@
 # ⭐ Store Rating Platform
 
-A full-stack web application that allows users to discover and rate stores. The platform provides role-based functionality for **System Administrators**, **Normal Users**, and **Store Owners**.
+A full-stack web application that allows users to discover, manage, and rate stores. The platform provides role-based functionality for **System Administrators**, **Normal Users**, and **Store Owners**.
 
 Built as part of a **Full Stack Intern Coding Challenge** using **React.js, Express.js, and MySQL**.
 
@@ -10,13 +10,22 @@ Built as part of a **Full Stack Intern Coding Challenge** using **React.js, Expr
 
 The Store Rating Platform provides a single authentication system with role-based access control.
 
-After logging in, users are given access to different functionalities based on their role:
+After logging in, users receive access to different functionalities based on their assigned role:
 
 - **System Administrator** — manages users, stores, and platform data.
 - **Normal User** — browses stores and submits or updates ratings.
 - **Store Owner** — monitors ratings submitted for their assigned store.
 
-The application includes authentication, form validation, password management, store ratings, filtering, sorting, and protected role-based routes.
+The application includes:
+
+- Authentication and authorization
+- Role-based access control
+- Form validation
+- Password management
+- Store ratings
+- Filtering and sorting
+- Protected routes
+- Responsive user interface
 
 ---
 
@@ -27,20 +36,24 @@ The application includes authentication, form validation, password management, s
 - JWT-based authentication
 - Password hashing using bcrypt
 - Role-based authorization
-- Roles supported:
-  - `USER`
-  - `OWNER`
-  - `ADMIN`
+- Single login system for all user roles
+- Protected frontend routes
+- Role-based access to application features
 - Normal users can register through the platform
 - Secure login functionality
 - Password update functionality for authenticated users
-- Logout functionality that clears locally stored authentication data
-- Protected frontend routes
+- Logout functionality
 - Unauthorized users are redirected appropriately based on authentication and role
+
+### Supported Roles
+
+- `USER`
+- `OWNER`
+- `ADMIN`
 
 ---
 
-## 👤 Normal User
+# 👤 Normal User
 
 Normal users can:
 
@@ -61,7 +74,7 @@ Normal users can:
 
 ---
 
-## 🏪 Store Owner
+# 🏪 Store Owner
 
 Store owners can:
 
@@ -75,54 +88,64 @@ Store owners can:
 
 ---
 
-## 👨‍💼 System Administrator
+# 👨‍💼 System Administrator
 
-Administrators can:
+## Dashboard
 
-### Dashboard
-
-View platform statistics:
+Administrators can view platform statistics including:
 
 - Total number of users
 - Total number of stores
 - Total number of submitted ratings
 
-### User Management
+---
+
+## User Management
+
+Administrators can:
 
 - Add new users
-- Create:
-  - Normal Users
-  - Administrator Users
+- Create Normal Users
+- Create Administrator Users
 - View all users
 - View user details
-- View:
-  - Name
-  - Email
-  - Address
-  - Role
-- View Store Owner details and associated rating information where applicable
 
-### User Filtering
-
-Filter users by:
+User information includes:
 
 - Name
 - Email
 - Address
 - Role
 
-### User Sorting
+Store Owner details and associated rating information are displayed where applicable.
 
-Sort users in ascending or descending order by key fields such as:
+---
 
-- User ID
+## User Filtering
+
+Users can be filtered by:
+
+- Name
+- Email
+- Address
+- Role
+
+---
+
+## User Sorting
+
+Users can be sorted in ascending or descending order by key fields such as:
+
+- ID
 - Name
 - Email
 - Address
 - Role
 - Registration Date
 
-### Store Management
+---
+
+## Store Management
 
 Administrators can:
 
@@ -130,23 +153,29 @@ Administrators can:
 - Add new stores
 - Update stores
 - Delete stores
-- View:
-  - Store Name
-  - Email
-  - Address
-  - Average Rating
 
-### Store Filtering
+Store information includes:
 
-Filter stores by:
+- Store Name
+- Email
+- Address
+- Average Rating
+
+---
+
+## Store Filtering
+
+Stores can be filtered by:
 
 - Name
 - Email
 - Address
 
-### Store Sorting
+---
 
-Sort stores in ascending or descending order by:
+## Store Sorting
+
+Stores can be sorted in ascending or descending order by:
 
 - Name
 - Email
@@ -154,25 +183,27 @@ Sort stores in ascending or descending order by:
 - Average Rating
 - Created Date
 
-### Logout
+---
 
-- Log out securely from the platform
+## Logout
+
+Administrators can securely log out of the platform.
 
 ---
 
 # ⭐ Rating System
 
-The platform allows normal users to rate registered stores.
+The platform allows Normal Users to rate registered stores.
 
-### Rating Rules
+## Rating Rules
 
 - Ratings must be between **1 and 5**
 - A user can submit a rating for a store
 - Users can update their previously submitted rating
 - Store listings display:
-  - Overall rating
-  - The logged-in user's submitted rating
-- Store owners can view ratings submitted for their store
+  - Overall Rating
+  - Logged-in User's Submitted Rating
+- Store Owners can view ratings submitted for their store
 - Average store ratings are calculated from submitted ratings
 
 ---
@@ -182,7 +213,7 @@ The platform allows normal users to rate registered stores.
 The application follows the validation rules specified in the coding challenge.
 
 | Field | Validation Rule |
-|---|---|
+| --- | --- |
 | Name | Minimum 20 characters and maximum 60 characters |
 | Address | Maximum 400 characters |
 | Email | Must follow standard email validation rules |
@@ -198,6 +229,8 @@ The application follows the validation rules specified in the coding challenge.
 ## User Management
 
 ### Filters
+
+Users can be filtered by:
 
 - Name
 - Email
@@ -221,6 +254,8 @@ Users can be sorted in ascending or descending order by:
 
 ### Filters
 
+Stores can be filtered by:
+
 - Name
 - Email
 - Address
@@ -234,6 +269,26 @@ Stores can be sorted in ascending or descending order by:
 - Address
 - Average Rating
 - Created Date
+
+---
+
+# 📱 Responsive Design
+
+The application is designed to work across different screen sizes.
+
+The frontend layout adapts for:
+
+- Desktop devices
+- Tablets
+- Mobile devices
+
+Responsive styling ensures that:
+
+- Navigation adapts to smaller screens
+- Cards and dashboard sections stack appropriately
+- Forms remain usable on smaller devices
+- Tables remain readable using horizontal scrolling when required
+- Buttons and text avoid unnecessary compression or awkward wrapping
 
 ---
 
@@ -262,6 +317,7 @@ Stores can be sorted in ascending or descending order by:
 - JSON Web Tokens (JWT)
 - bcrypt
 - express-validator
+- Environment Variables
 
 ---
 
@@ -290,6 +346,7 @@ store-rating-platform/
 │   │   │   └── api.js
 │   │   │
 │   │   ├── App.jsx
+│   │   ├── index.css
 │   │   └── main.jsx
 │   │
 │   └── package.json
@@ -359,7 +416,7 @@ If you are using Windows and the command above does not work, manually create:
 server/.env
 ```
 
-Then copy the values from:
+Then copy the required environment variable names from:
 
 ```text
 server/.env.example
@@ -384,7 +441,7 @@ JWT_SECRET=your_secure_jwt_secret
 
 > ⚠️ Never commit your `.env` file to GitHub.
 
-The `.env` file is excluded using `.gitignore`.
+The `.env` file should remain excluded through `.gitignore`.
 
 ---
 
@@ -402,7 +459,7 @@ CREATE DATABASE store_rating_platform;
 
 ## 2. Configure the Application
 
-Make sure the database name in your `.env` file matches:
+Make sure the database name in your `.env` file matches your database configuration:
 
 ```env
 DB_NAME=store_rating_platform
@@ -462,7 +519,7 @@ Start the development server:
 npm run dev
 ```
 
-The Vite application will provide a local URL, typically:
+The Vite application will provide a local development URL, typically:
 
 ```text
 http://localhost:5173
@@ -484,11 +541,11 @@ npm run build
 # 📜 Available Scripts
 
 | Location | Command | Description |
-|---|---|---|
+| --- | --- | --- |
 | `server` | `npm run dev` | Start backend using Nodemon |
 | `server` | `npm start` | Start backend using Node.js |
 | `client` | `npm run dev` | Start Vite development server |
-| `client` | `npm run build` | Create production build |
+| `client` | `npm run build` | Create a production build |
 
 ---
 
@@ -512,18 +569,19 @@ The project follows several security practices:
 The application uses three primary roles.
 
 | Feature | USER | OWNER | ADMIN |
-|---|:---:|:---:|:---:|
+| --- | :---: | :---: | :---: |
 | Login | ✅ | ✅ | ✅ |
 | Register as Normal User | ✅ | ❌ | ❌ |
-| Browse Stores | ✅ | - | - |
+| Browse Stores | ✅ | ❌ | ❌ |
 | Submit Rating | ✅ | ❌ | ❌ |
 | Update Rating | ✅ | ❌ | ❌ |
-| Update Password | ✅ | ✅ | - |
+| Update Password | ✅ | ✅ | Role-based access |
 | View Own Store Ratings | ❌ | ✅ | ❌ |
 | View Average Store Rating | ❌ | ✅ | ❌ |
 | View Platform Statistics | ❌ | ❌ | ✅ |
 | Manage Users | ❌ | ❌ | ✅ |
 | Manage Stores | ❌ | ❌ | ✅ |
+| Logout | ✅ | ✅ | ✅ |
 
 ---
 
@@ -577,6 +635,16 @@ This project implements the major requirements of the Full Stack Intern Coding C
 - [x] Password validation
 - [x] Rating validation
 
+## Additional Requirements
+
+- [x] Role-based access control
+- [x] Authentication and authorization
+- [x] Protected routes
+- [x] Filtering functionality
+- [x] Sorting functionality
+- [x] Responsive user interface
+- [x] MySQL database integration
+
 ---
 
 # 🧹 Repository Practices
@@ -592,7 +660,7 @@ dist/
 *.log
 ```
 
-This keeps the repository clean and prevents sensitive credentials from being uploaded.
+This helps keep the repository clean and prevents sensitive credentials from being uploaded.
 
 ---
 
@@ -624,15 +692,16 @@ Full Stack Development Enthusiast
 
 # 📄 License
 
-This project is created for educational and coding challenge purposes.
+This project was created for educational and coding challenge purposes.
 
 ---
 
-## 📌 Project Status
+# 📌 Project Status
 
-✅ Core requirements implemented  
-✅ Role-based access control implemented  
-✅ Authentication and validation implemented  
-✅ Sorting and filtering implemented  
-✅ Environment variables configured  
-✅ Repository ready for GitHub submission
+- ✅ Core requirements implemented
+- ✅ Role-based access control implemented
+- ✅ Authentication and validation implemented
+- ✅ Sorting and filtering implemented
+- ✅ Responsive design implemented
+- ✅ Environment variable configuration included
+- ✅ Repository prepared for GitHub submission
