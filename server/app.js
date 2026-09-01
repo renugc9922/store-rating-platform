@@ -11,10 +11,16 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 
 // ==================== MIDDLEWARE ====================
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:5173"
+}));
 app.use(express.json());
 
 // ==================== ROUTES ====================
+
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ success: true });
+});
 
 // Authentication
 app.use("/api/auth", authRoutes);
